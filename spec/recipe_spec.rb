@@ -26,6 +26,18 @@ describe Recipe do
           step 'Add tofu and serve'
         end
       end
+
+      recipe 'Banan Split' do
+        ingredient 'Banana'
+        ingredient 'Vanila Ice Cream'
+        ingredient 'Chocolate Ice Cream'
+        ingredient 'Banana'
+
+        method do
+          step 'Blend banana with ice cream'
+          step 'Add some topings and serve'
+        end
+      end
     end
   end
 
@@ -41,5 +53,23 @@ describe Recipe do
     expect(soup_recipe.name).to eq 'Miso Soup'
     expect(soup_recipe.ingredients).to eq ['Tofu', 'White miso paste']
     expect(soup_recipe.method_steps).to eq ['Mix miso paste into boiling water', 'Add tofu and serve']
+  end
+
+  it 'remove duplicate ingredient' do
+    banana_recipe = Recipe.for('Banan Split')
+
+    expect(banana_recipe.name).to eq 'Banan Split'
+    expect(banana_recipe.ingredients).to eq ['Banana', 'Vanila Ice Cream', 'Chocolate Ice Cream']
+    expect(banana_recipe.method_steps).to eq ['Blend banana with ice cream', 'Add some topings and serve']
+  end
+
+  it 'valid when name assigned' do
+    empty_recipe = Recipe.new(name: 'Sunny side up')
+    expect(empty_recipe.valid?).to eq true
+  end
+
+  it 'validate when name is empty' do
+    empty_recipe = Recipe.new(name: nil)
+    expect(empty_recipe.valid?).to eq 'Name cannot be empty !'
   end
 end

@@ -6,10 +6,20 @@ class Recipe
   attr_reader :name, :ingredients, :method_steps
 
   def initialize(name:, ingredients: [], method_steps: [])
+    return if name.nil?
+
     @name = name
     @ingredients = ingredients
     @method_steps = method_steps
     @@recipes[name.to_sym] = self
+  end
+
+  # method for checking if name is exists and
+  # send message nem cannot be empty, when name is nil
+  def valid?
+    return true unless @name.nil?
+
+    'Name cannot be empty !'
   end
 
   # sorry i have no ide for clear, it is without databases
